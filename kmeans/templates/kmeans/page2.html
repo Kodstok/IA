@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>spam detection</title>
+	<link href="{% static 'dist/css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'css/kmeans.css' %}" rel="stylesheet">
+</head>
+<div class="container">
+<header>
+	<img src='{% static 'spamfilter.jpg' %}'>
+</header>
+<body>	
+<div id="formulary"  name="formulaire"> <!-- rajoutez la fonction onsubmit="return validation ()" -->
+		<form enctype="multipart/form-data" action="page3" method="POST">{% csrf_token %}
+			
+			<div class="row">
+				{% for i in colonne %}
+				<div id="form{{test}}"  class="col-md-1">
+					<SELECT NAME="{{i}}">
+					{% for row in stats %}
+					<OPTION VALUE="{{row.0}}">colonne {{row.0}}
+					{% endfor %}
+					</OPTION>
+					</SELECT>
+				</div>
+				{% endfor %}
+			</div>
+			<div id="but">
+				<br>
+				<button type="submit" class="btn btn-primary custom" > Ok</button>
+				<button type="reset" class="btn btn-primary custom"> Clear</button>		
+				<hr>	
+			</div>
+		</form>
+</div>
+<div id="stats">
+	<div class="row" >
+		{% for row in stats %}
+		<div  class="col-md-2 stats">
+			<span id="title">Champ {{row.0}}:</span><br>
+			Moyenne: {{row.1}}<br>
+			Ecart type: {{row.2}}
+		</div>
+		{% endfor %}	
+	</div>		
+</div>
+</body>
+<footer>
+	<div class="row" >
+		<div class="col-md-6">
+			Website created by<br>
+			Abdesselam Gaia<br>
+			Frechard Kevin<br>
+			Kieffer Guillaume<br>
+			Petrowski Ludovic<br>
+		</div>
+		<div class="col-md-6">
+			&copy; 2016 Spam filter
+		</div>	
+	</div>
+</footer>
+</div>
+</html>

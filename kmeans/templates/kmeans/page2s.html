@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>spam detection</title>
+	<link href="{% static 'dist/css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'css/kmeans.css' %}" rel="stylesheet">
+</head>
+<div class="container">
+<header>
+	<img src='{% static 'spamfilter.jpg' %}'>
+</header>
+<body>	
+<div id="formulary"  name="formulaire"> <!-- rajoutez la fonction onsubmit="return validation ()" -->
+		<form enctype="multipart/form-data" action="page3" method="POST">{% csrf_token %}
+			<div class="row">
+				<div id="form1"  class="col-md-1">
+					<SELECT NAME="couleur">
+					<OPTION VALUE="valeur_1" SELECTED>Champ 1
+					<OPTION VALUE="valeur_2">Champ 2
+					</OPTION>
+					</SELECT>
+				</div>
+				<div id="form2" class="col-md-1">
+					<SELECT NAME="couleur">
+					<OPTION VALUE="valeur_1" SELECTED>Champ 2
+					<OPTION VALUE="valeur_2">Champ 2
+					</OPTION>
+					</SELECT>
+				</div>
+				<div id="form3" class="col-md-1">
+					<SELECT NAME="couleur">
+					<OPTION VALUE="valeur_1" SELECTED>Champ 3
+					<OPTION VALUE="valeur_2">Champ 3
+					</OPTION>
+					</SELECT>
+				</div>
+			</div>
+			<div id="but">
+				<br>
+				<button type="submit" class="btn btn-primary custom" > Ok</button>
+				<button type="reset" class="btn btn-primary custom"> Clear</button>		
+				<hr>	
+			</div>
+		</form>
+</div>
+<div id="stats">
+	<div class="row" >
+		<div class="col-md-4">
+			<span id="title">Champ 1:</span><br>
+			Valeur minimum: 0<br>
+			Valeur maximum: 1<br>
+			Moyenne: 1.5<br>
+			Ecart type: 0.5
+		</div>
+			
+		<div class="col-md-4">
+			<span id="title">Champ 2:</span><br>
+			Valeur minimum: 0<br>
+			Valeur maximum: 1<br>
+			Moyenne: 1.5<br>
+			Ecart type: 0.5
+		</div>
+			
+		<div class="col-md-4">
+			<span id="title">Champ 3:</span><br>
+			Valeur minimum: 0<br>
+			Valeur maximum: 1<br>
+			Moyenne: 1.5<br>
+			Ecart type: 0.5
+		</div>
+	</div>
+	<div class="row" id="stat2">
+		<div class="col-md-4">
+			<span id="title">Champ 1:</span><br>
+			Valeur minimum: 0<br>
+			Valeur maximum: 1<br>
+			Moyenne: 1.5<br>
+			Ecart type: 0.5
+		</div>
+			
+		<div class="col-md-4">
+			<span id="title">Champ 2:</span><br>
+			Valeur minimum: 0<br>
+			Valeur maximum: 1<br>
+			Moyenne: 1.5<br>
+			Ecart type: 0.5
+		</div>
+			
+		<div class="col-md-4">
+			<span id="title">Champ 3:</span><br>
+			Valeur minimum: 0<br>
+			Valeur maximum: 1<br>
+			Moyenne: 1.5<br>
+			Ecart type: 0.5
+		</div>
+	</div>
+	<div class="row" id="stat2">
+		<div class="col-md-4">
+			<span id="title">Champ 1:</span><br>
+			Valeur minimum: 0<br>
+			Valeur maximum: 1<br>
+			Moyenne: 1.5<br>
+			Ecart type: 0.5
+		</div>
+			
+		<div class="col-md-4">
+			<span id="title">Champ 2:</span><br>
+			Valeur minimum: 0<br>
+			Valeur maximum: 1<br>
+			Moyenne: 1.5<br>
+			Ecart type: 0.5
+		</div>
+			
+		<div class="col-md-4">
+			<span id="title">Champ 3:</span><br>
+			Valeur minimum: 0<br>
+			Valeur maximum: 1<br>
+			Moyenne: 1.5<br>
+			Ecart type: 0.5
+		</div>
+	</div>		
+</div>
+</body>
+<footer>
+	<div class="row" >
+		<div class="col-md-6">
+			Website created by<br>
+			Abdesselam Gaia<br>
+			Frechard Kevin<br>
+			Kieffer Guillaume<br>
+			Petrowski Ludovic<br>
+		</div>
+		<div class="col-md-6">
+			&copy; 2016 Spam filter
+		</div>	
+	</div>
+</footer>
+</div>
+</html>

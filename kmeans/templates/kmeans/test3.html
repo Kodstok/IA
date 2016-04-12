@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>spam detection</title>
+	<link href="{% static 'dist/css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'css/kmeans.css' %}" rel="stylesheet">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
+	<script type="text/javascript">
+		{% for c in k %}
+		var dataset{{c.id}}={{c.observations}};
+		{% endfor %}
+		function drawChart()
+		{
+			
+			{% for c in k %}
+			var data_str{{c.id}} = JSON.stringify(dataset{{c.id}});
+			{% endfor %}
+			$('#graphics').highcharts({
+				chart: 
+				{
+					margin: 160,
+					type: 'scatter',
+					options3d: 
+					{
+						enabled: true,
+						alpha: 10, //angles par rapport auxquels on voit le graphique
+						beta: 40,
+						depth: 250,
+						viewDistance: 5,
+						frame: 
+						{
+							bottom: { size: 1, color: 'rgba(0,0,0,0.02)' },
+							back: { size: 1, color: 'rgba(0,0,0,0.04)' },
+							side: { size: 1, color: 'rgba(0,0,0,0.06)' }
+						}
+						
+					}
+				},
+				title: 
+				{
+					text: 'Spam detection'
+				},
+				
+				yAxis: {
+					min: 0,
+					max: 1,
+					title: 
+					{
+						enabled: true,
+						text: 'coucou',
+						style: 
+						{
+							fontWeight: 'normal'
+						}
+					}
+				},
+				xAxis: {
+					min: 0,
+					max: 1,
+					gridLineWidth: 1,
+					title: 
+					{
+						enabled: true,
+						text: 'coucou',
+						style: 
+						{
+							fontWeight: 'normal'
+						}
+					}
+					
+				},
+				zAxis: {
+					min: 0,
+					max: 1,
+					title: 
+					{
+						enabled: true,
+						text: 'coucou',
+						style: 
+						{
+							fontWeight: 'normal'
+						}
+					}
+					
+				},
+				legend: {
+					enabled: false
+				},
+				exporting: 
+				{ 
+					enabled: false 
+				},
+				credits: 
+				{
+				enabled: false
+				},
+				series: 
+				[
+			
+
+				{ //chargement des données
+					name: 'dataset',
+					color: '{{data_color.0}}',
+					data: JSON.parse(data_str0)	
+				
+				}
+				{% for i in rg %}
+				,
+				{ //chargement des données
+					name: 'dataset',
+					color: 'red',
+					data: JSON.parse(data_str{{i}})	
+				
+				}
+				{% endfor %}
+				]
+			}
+			/*,function(chart)
+			{
+				$.each(chart.series[0].data,function(i,data)
+				{
+					
+					if(data.y > 5)
+					{
+						
+						data.update
+						({
+							color: 'red',
+							
+						});
+					}
+
+				});	
+			}*/);
+		}
+	</script>	
+</head>
+<div class="container">
+<header>
+	<img src='{% static 'spamfilter.jpg' %}'>
+</header>
+<body onload="drawChart();">				
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<div id="graphics" style="height: 500px"></div>							
+</body>
+<footer>
+	<div class="row" >
+		<div class="col-md-6">
+			Website created by<br>
+			Abdesselam Gaia<br>
+			Frechard Kevin<br>
+			Kieffer Guillaume<br>
+			Petrowski Ludovic<br>
+		</div>
+		<div class="col-md-6">
+			&copy; 2016 Spam filter
+		</div>	
+	</div>
+</footer>
+</div>
+</html>
+
+
