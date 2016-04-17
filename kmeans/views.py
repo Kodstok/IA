@@ -65,11 +65,7 @@ def page2(request):
 
 def page3(request):
 	if request.method =="POST":
-		data_color = []
-		data_color.append('blue')
-		data_color.append('red')
-		data_color.append('green')
-		data_color.append('yellow')
+		data_color = ['blue','red','green','yellow','burlywood','darkblue','darkmagenta','darkgray','chocolate','deeppink','khaki','indianred']
 		print(request.POST)
 		print(request.session['remove'])
 		l = int(request.session['remove'])
@@ -82,11 +78,19 @@ def page3(request):
 		k = kmeans.kmeans(normalizedData, int(request.session['classes']))
 		for c in k:
 			print(c.id)
-		rg = range(len(k))
-		rg.pop(0)
+		index=1
+		rg = []
+		for i in range(len(k)-1):
+			row=[]
+			row.append(index)
+			
+			row.append(data_color[index])
+			index=index+1
+			rg.append(row)
+		print(rng)
 		print(rg)
 		print(data_color)
-		return render(request,'kmeans/test3.html',{'k':k,'rg':rg,'data_color':data_color})
+		return render(request,'kmeans/test3.html',{'k':k,'rg':rg,'data_color':data_color,'rng':rng})
 	else:
 		print("page 3 POST == false")
 		return render(request,'kmeans/page1.html',{})
