@@ -76,8 +76,8 @@ def page3(request):
 		data = open_dataset_range(request.session['docfile'],rng)
 		normalizedData=normalize(data)
 		k = kmeans.kmeans(normalizedData, int(request.session['classes']))
-		for c in k:
-			print(c.id)
+		#for c in k:
+		#	print(c.id)
 		index=1
 		rg = []
 		for i in range(len(k)-1):
