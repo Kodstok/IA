@@ -11,7 +11,7 @@ def distance_euclidienne(vecteur1, vecteur2):
 		distance = sqrt(sum(pow(float(vecteur1[i])-float(vecteur2[i]),2) for i in range(len(vecteur1)))) 
 	except:
 		print vecteur1, vecteur2
-	return round(distance, 1)
+	return distance
 
 def get_cluster_obs(clusters, r):	
 	res = Cluster(-1, [])
@@ -23,7 +23,17 @@ def get_cluster_obs(clusters, r):
 				res.observations = c.observations
 	return res
 
-			
+def remove_extreme(cluster, p):
+	dist_centroide = []
+	for c in cluster:
+		for obs in c.observations:
+			dist_centroide.append([c, distance_euclidienne(obs, c.centroide), obs])
+		dist_centroide = sorted(dist_centroide, key=operator.itemgetter(1), reverse = True) 
+		for i in range((len(dist_centroide)*p)/100):		
+			c.observations.remove(dist_centroide[i][2])
+		dist_centroide = []
+	return cluster
+	
 def kmeans (data, k):
 	# Cluster est un objet qui contient:
 	# un id, un centroide, un tableau d'observations
@@ -37,7 +47,7 @@ def kmeans (data, k):
 	# initialisation forcee
 	# Le principe : On prend K observations aleatoires qui seront centroide de chaque cluster
 	for i in range(k):
-		clusters.append(Cluster(i, data[i+6]))
+		clusters.append(Cluster(i, data[randint(0, len(data) -1)]))
 		curr_avg_centroide.append(0)
 		old_avg_centroide.append(0)
 
