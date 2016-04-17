@@ -3,11 +3,15 @@ from random import randint
 from cluster import Cluster
 from decimal import Decimal
 import operator
-
+import os
 def distance_euclidienne(vecteur1, vecteur2):
-	#on calcule la distance entre le vec1 et le vec2 pour chaque coordonnees
-	distance = sqrt(sum(pow(float(vecteur1[i])-float(vecteur2[i]),2) for i in range(len(vecteur1)))) 
-	return distance
+	
+	distance = 0
+	try:
+		distance = sqrt(sum(pow(float(vecteur1[i])-float(vecteur2[i]),2) for i in range(len(vecteur1)))) 
+	except:
+		print vecteur1, vecteur2
+	return round(distance, 1)
 
 def get_cluster_obs(clusters, r):	
 	res = Cluster(-1, [])
@@ -19,16 +23,7 @@ def get_cluster_obs(clusters, r):
 				res.observations = c.observations
 	return res
 
-def virer(clusters,n):
-	dist_centroide=[]
-	for c in clusters:
-		for obs in c.observations:
-			dist_centroide.append([c, distance_euclidienne(obs, c.centroide)])  
-		sorted(dist_centroide, key=operator.itemgetter(1), reverse = False) 
-		for i in range((len(dist_centroide)*n)/100):
-			dist_centroide.pop()
-		dist_centroide = []
-	return dist_centroide
+			
 def kmeans (data, k):
 	# Cluster est un objet qui contient:
 	# un id, un centroide, un tableau d'observations
@@ -36,14 +31,16 @@ def kmeans (data, k):
 	clusters = []
 	dist_centroide = []
 	avg_centroide = [0,0,0,0] 
-	curr_avg_centroide = [0,0,0]
-	old_avg_centroide = [0,0,0]
+	curr_avg_centroide = []
+	old_avg_centroide = []
 	#On choisit K observations aleatoires comme centroide
 	# initialisation forcee
 	# Le principe : On prend K observations aleatoires qui seront centroide de chaque cluster
 	for i in range(k):
-		clusters.append(Cluster(i, data[i]))
-	
+		clusters.append(Cluster(i, data[i+6]))
+		curr_avg_centroide.append(0)
+		old_avg_centroide.append(0)
+
 	# on remplit chaque clusters avec les points les plus proches	
 	for obs in data:
 		for c in clusters:
@@ -69,7 +66,7 @@ def kmeans (data, k):
 							
 			for i in range(len(avg_centroide)):
 				avg_centroide[i] /= len(c.observations)
-				avg_centroide[i] = round(avg_centroide[i], 1)
+				avg_centroide[i] = avg_centroide[i]
 			c.centroide = avg_centroide
 			
 			
