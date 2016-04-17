@@ -12,23 +12,22 @@
 		{% for c in k %}
 		var dataset{{c.id}}={{c.observations}};
 		{% endfor %}
-		function drawChart()
-		{
-			
+
+		$(function () {
 			{% for c in k %}
 			var data_str{{c.id}} = JSON.stringify(dataset{{c.id}});
-			{% endfor %}
-			$('#graphics').highcharts({
-				chart: 
-				{
-					margin: 160,
+			{% endfor %}   
+    var chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'graphics',
+            margin: 100,
 					type: 'scatter',
 					options3d: 
 					{
 						enabled: true,
 						alpha: 10, //angles par rapport auxquels on voit le graphique
 						beta: 40,
-						depth: 250,
+						depth: 500,
 						viewDistance: 5,
 						frame: 
 						{
@@ -50,7 +49,7 @@
 					title: 
 					{
 						enabled: true,
-						text: 'coucou',
+						text: 'colonne {{rng.0}}',
 						style: 
 						{
 							fontWeight: 'normal'
@@ -64,7 +63,7 @@
 					title: 
 					{
 						enabled: true,
-						text: 'coucou',
+						text: 'colonne {{rng.1}}',
 						style: 
 						{
 							fontWeight: 'normal'
@@ -78,7 +77,7 @@
 					title: 
 					{
 						enabled: true,
-						text: 'coucou',
+						text: 'colonne {{rng.2}}',
 						style: 
 						{
 							fontWeight: 'normal'
@@ -87,7 +86,8 @@
 					
 				},
 				legend: {
-					enabled: false
+					itemMarginTop: 5,
+					align:'left'
 				},
 				exporting: 
 				{ 
@@ -97,12 +97,8 @@
 				{
 				enabled: false
 				},
-				series: 
-				[
-			
-
-				{ //chargement des données
-					name: 'dataset',
+        series: [{ //chargement des données
+					name: 'cluster 0',
 					color: '{{data_color.0}}',
 					data: JSON.parse(data_str0)	
 				
@@ -110,32 +106,48 @@
 				{% for i in rg %}
 				,
 				{ //chargement des données
-					name: 'dataset',
-					color: 'red',
-					data: JSON.parse(data_str{{i}})	
+					name: 'cluster {{i.0}}',
+					color: '{{i.1}}',
+					data: JSON.parse(data_str{{i.0}})	
 				
 				}
 				{% endfor %}
 				]
-			}
-			/*,function(chart)
-			{
-				$.each(chart.series[0].data,function(i,data)
-				{
-					
-					if(data.y > 5)
-					{
-						
-						data.update
-						({
-							color: 'red',
-							
-						});
-					}
+    });
 
-				});	
-			}*/);
-		}
+
+    // Add mouse events for rotation
+    $(chart.container).bind('mousedown.hc touchstart.hc', function (eStart) {
+        eStart = chart.pointer.normalize(eStart);
+
+        var posX = eStart.pageX,
+            posY = eStart.pageY,
+            alpha = chart.options.chart.options3d.alpha,
+            beta = chart.options.chart.options3d.beta,
+            newAlpha,
+            newBeta,
+            sensitivity = 5; // lower is more sensitive
+
+        $(document).bind({
+            'mousemove.hc touchdrag.hc': function (e) {
+                // Run beta
+                newBeta = beta + (posX - e.pageX) / sensitivity;
+                chart.options.chart.options3d.beta = newBeta;
+
+                // Run alpha
+                newAlpha = alpha + (e.pageY - posY) / sensitivity;
+                chart.options.chart.options3d.alpha = newAlpha;
+
+                chart.redraw(false);
+            },
+            'mouseup touchend': function () {
+                $(document).unbind('.hc');
+            }
+        });
+    });
+
+});
+
 	</script>	
 </head>
 <div class="container">
