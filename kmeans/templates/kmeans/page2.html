@@ -13,7 +13,7 @@
 	<a href="http://localhost:8000/"><img id="logo" src='{% static 'spamfilter.jpg' %}'></a>
 </header>
 <body>	
-<div id="formulary"  name="formulaire"> <!-- rajoutez la fonction onsubmit="return validation ()" -->
+<div id="formulary"  name="formulaire"> 
 		<form enctype="multipart/form-data" action="page3" method="POST">{% csrf_token %}
 			
 			<div class="row">
