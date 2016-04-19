@@ -89,10 +89,18 @@ def page3(request):
 			row.append(data_color[index])
 			index=index+1
 			rg.append(row)
-		print(rng)
-		print(rg)
-		print(data_color)
-		return render(request,'kmeans/test3.html',{'k':k,'rg':rg,'data_color':data_color,'rng':rng})
+		centro=[]
+		index =0
+		for c in k:
+			print("cluster id : "+str(c.id)+" centroide : " + str(c.centroide[0])+" ; "+str(c.centroide[1])+" ; "+str(c.centroide[2]))
+			row =[]
+			st = str(c.centroide[0])+" ; "+str(c.centroide[1])+" ; "+str(c.centroide[2])
+			row.append(index)
+			index=index+1
+			row.append(st)
+			centro.append(row)
+		print(centro)
+		return render(request,'kmeans/test3.html',{'k':k,'rg':rg,'data_color':data_color,'rng':rng,'centro':centro})
 	else:
 		print("page 3 POST == false")
 		return render(request,'kmeans/page1.html',{})
