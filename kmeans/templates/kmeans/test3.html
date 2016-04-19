@@ -158,7 +158,12 @@
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/highcharts-3d.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
-	<div id="graphics" style="height: 500px"></div>							
+	<div id="graphics" style="height: 500px"></div>	
+	<div class="well">
+		{% for c in centro %}
+		<div> Id : {{c.0}}, Centroide : {{c.1}} </div>
+		{% endfor %}
+	</div>						
 </body>
 <footer>
 	<div class="row" >
