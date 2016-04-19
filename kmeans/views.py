@@ -68,7 +68,7 @@ def page3(request):
 		data_color = ['blue','red','green','yellow','burlywood','darkblue','darkmagenta','darkgray','chocolate','deeppink','khaki','indianred']
 		print(request.POST)
 		print(request.session['remove'])
-		l = int(request.session['remove'])
+		l = 3
 		rng =[]
 		for i in range(l):
 			rng.append(int(request.POST[''+str(i)]))
