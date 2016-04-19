@@ -55,7 +55,7 @@ def page2(request):
 		request.session['classes']=request.POST['classes']
 		request.session['remove']=request.POST['remove']
 		request.session['docfile']=request.FILES['docfile'].name
-		colonne=range(int(request.session['remove']))
+		colonne=range(3)
 		data = open_dataset(request.session['docfile'])
 		normalizedData=normalize(data)
 		stats = getStats(normalizedData)
@@ -76,6 +76,8 @@ def page3(request):
 		data = open_dataset_range(request.session['docfile'],rng)
 		normalizedData=normalize(data)
 		k = kmeans.kmeans(normalizedData, int(request.session['classes']))
+		print("remove :"+request.session['remove'])
+		k=kmeans.remove_extreme(k,int(request.session['remove']))
 		#for c in k:
 		#	print(c.id)
 		index=1
